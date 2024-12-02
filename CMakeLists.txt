@@ -79,8 +79,9 @@ set(ZLIB_SRCS
     uncompr.c
     zutil.c)
 
-set_source_files_properties(win32/zlib1.rc PROPERTIES
-    COMPILE_FLAGS $<$<STREQUAL:${CMAKE_RC_OUTPUT_EXTENSION},.obj>:-DGCC_WINDRES>)
+if(MINGW)
+    set_source_files_properties(win32/zlib1.rc PROPERTIES COMPILE_FLAGS "-DGCC_WINDRES")
+endif()
 
 # Add a suffix before the extension to avoid conflicting static
 # lib and shared implib name (typically with MSVC)
