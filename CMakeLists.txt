@@ -81,7 +81,7 @@ set(ZLIB_SRCS
 
 if(MINGW)
     set_source_files_properties(win32/zlib1.rc PROPERTIES COMPILE_FLAGS "-DGCC_WINDRES")
-endif()
+endif(MINGW)
 
 # Add a suffix before the extension to avoid conflicting static
 # lib and shared implib name (typically with MSVC)
