@@ -79,9 +79,8 @@ set(ZLIB_SRCS
     uncompr.c
     zutil.c)
 
-if(MINGW)
-    set_source_files_properties(win32/zlib1.rc PROPERTIES COMPILE_FLAGS "-DGCC_WINDRES")
-endif(MINGW)
+set_source_files_properties(win32/zlib1.rc PROPERTIES
+    COMPILE_FLAGS $<$<BOOL:${MINGW}>:-DGCC_WINDRES>)
 
 # Add a suffix before the extension to avoid conflicting static
 # lib and shared implib name (typically with MSVC)
