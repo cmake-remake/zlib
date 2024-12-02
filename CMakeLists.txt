@@ -118,6 +118,10 @@ if(ZLIB_BUILD_SHARED)
         SOVERSION 1
         OUTPUT_NAME z
         $<$<BOOL:NOT:$CYGWIN}>:VERSION ${zlib_VERSION}>)
+    if(WIN32)
+        set_target_properties(zlib PROPERTIES
+            SUFFIX "${zlib_VERSION_MAJOR}${CMAKE_SHARED_LIBRARY_SUFFIX}")
+    endif(WIN32)
     if(UNIX AND NOT APPLE AND NOT(CMAKE_SYSTEM_NAME STREQUAL AIX))
         # On unix-like platforms the library is almost always called libz
         set_target_properties(zlib PROPERTIES
@@ -155,7 +159,6 @@ if(ZLIB_INSTALL_LIBRARIES)
         if(ZLIB_INSTALL_COMPAT_DLL)
             install(FILES  $<TARGET_FILE:zlib>
                 COMPONENT Runtime
-                RENAME zlib1.dll
                 DESTINATION "${CMAKE_INSTALL_BINDIR}")
         endif(ZLIB_INSTALL_COMPAT_DLL)
 
