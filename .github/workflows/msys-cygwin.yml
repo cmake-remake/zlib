@@ -69,6 +69,6 @@ jobs:
           -DCMAKE_BUILD_TYPE=Release \
           -G Ninja
     - name: Build
-      run: cmake --build build --config Release
+      run: cmake --build build --config Release --verbose
     - name: Run tests
       run: ctest --output-on-failure --test-dir build -C Release

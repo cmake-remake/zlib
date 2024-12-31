@@ -67,9 +67,10 @@ if(ZLIB_BUILD_STATIC)
         if(${CMAKE_C_COMPILER_ID} STREQUAL "GNU")
             find_program(GCOV_EXECUTABLE gcov)
         endif(${CMAKE_C_COMPILER_ID} STREQUAL "GNU")
-
+        message(STATUS )
         if(${CMAKE_C_COMPILER_ID} STREQUAL "Clang")
             set(llvm_names llvm_cov)
+            list(APPEND llvm_names llvm-cov)
 
             foreach(ver RANGE 11 99)
               list(APPEND llvm_names llvm-cov-${ver})
