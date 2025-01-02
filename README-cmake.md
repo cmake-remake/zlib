@@ -4,41 +4,41 @@ In most cases the usual "mkdir build && cd build && cmake .." will create everyt
 if you want something off default you can adjust several options fit your needs. Every option is
 list below (excluding the cmake-standard options), they can be set via cmake-gui or on cmdline with
 
-	-D<option>=ON/OFF
+    -D<option>=ON/OFF
 
 ## ZLIB-options with defaults ##
 
-ZLIB_BUILD_TESTING=ON -- Enable Zlib Examples as tests
+    ZLIB_BUILD_TESTING=ON -- Enable Zlib Examples as tests
 
-ZLIB_BUILD_SHARED=ON -- Enable building zlib shared library
+    ZLIB_BUILD_SHARED=ON -- Enable building zlib shared library
 
-ZLIB_BUILD_STATIC=ON -- Enable building zlib static library
+    ZLIB_BUILD_STATIC=ON -- Enable building zlib static library
 
-ZLIB_BUILD_MINIZIP=ON -- Enable building libminizip contrib library
+    ZLIB_BUILD_MINIZIP=ON -- Enable building libminizip contrib library
 If this option is turned on, additional options are available from minizip (see below)
 
-ZLIB_INSTALL=ON -- Enable installation of zlib
+    ZLIB_INSTALL=ON -- Enable installation of zlib
 
-ZLIB_PREFIX=OFF -- prefix for all types and library functions, see zconf.h.in
+    ZLIB_PREFIX=OFF -- prefix for all types and library functions, see zconf.h.in
 
-ZLIB_INSTALL_COMPAT_DLL=ON -- Install a copy as zlib1.dll
+    ZLIB_INSTALL_COMPAT_DLL=ON -- Install a copy as zlib1.dll
 This option is only on windows available and may/will be turned off and removed somewhen in the future.
 If you rely cmake for finding and using zlib, this can be turned off, as zlib1.dll will never be used.
 
 ## minizip-options with defaults ##
 
-MINIZIP_BUILD_SHARED=ON Enable building minizip shared library
+    MINIZIP_BUILD_SHARED=ON Enable building minizip shared library
 
-MINIZIP_BUILD_STATIC=ON Enable building minizip static library
+    MINIZIP_BUILD_STATIC=ON Enable building minizip static library
 
-MINIZIP_BUILD_TESTING=ON Enable testing of minizip
+    MINIZIP_BUILD_TESTING=ON Enable testing of minizip
 
-MINIZIP_ENABLE_BZIP2=ON Build minizip withj bzip2 support
+    MINIZIP_ENABLE_BZIP2=ON Build minizip withj bzip2 support
 A usable installation of bzip2 is needed or config will fail. Turn this option of in this case.
 
-MINIZIP_INSTALL=ON Enable installation of minizip
+    MINIZIP_INSTALL=ON Enable installation of minizip
 
-MINIZIP_INSTALL_COMPAT_DLL=ON Install a copy as libminizip-1.dll
+    MINIZIP_INSTALL_COMPAT_DLL=ON Install a copy as libminizip-1.dll
 This option is only available on mingw as they tend to name this lib different. Maybe this will also be
 removed in the future as. If you rely cmake for finding and using zlib, this can be turned off, as
 the other file will never be used.
@@ -47,15 +47,15 @@ the other file will never be used.
 
 To pull in what you need it's enough to just write
 
-	find_package(ZLIB CONFIG)
+    find_package(ZLIB CONFIG)
 or
-	find_package(minizip CONFIG)
+    find_package(minizip CONFIG)
 
 in your CMakeLists.txt, however it is advised to specify what you really want via:
 
-	find_package(ZLIB CONFIG COMPONENTS shared static REQUIRED)
+    find_package(ZLIB CONFIG COMPONENTS shared static REQUIRED)
 or
-	find_package(minizip CONFIG COMPONENTS shared static REQUIRED)
+    find_package(minizip CONFIG COMPONENTS shared static REQUIRED)
 
 As it's possible to only build the shared or the static lib, you can make sure that everything you need
 is found. If no COMPONENTS are requested, everything that is found will satisfy your request. If the
@@ -65,10 +65,11 @@ want to link against are created.
 When you search for minizip, it will search zlib for you, so only one of both is needed.
 
 ## Imported targets ##
+
 When found the following targets are created for you:
 
-ZLIB::ZLIB and ZLIB:ZLIBSTATIC for zlib
-MINIZIP::minizip and MINIZIP::minizipstatic for minizip
+    ZLIB::ZLIB and ZLIB:ZLIBSTATIC for zlib
+    MINIZIP::minizip and MINIZIP::minizipstatic for minizip
 
 In addition a var called  MINIZIP_ENABLE_BZIP2 is exported so you can check if you got a bzip2 enabled
 version of the lib. As linking against libbz2 is only needed if you use functions from that set, it's
