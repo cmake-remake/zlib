@@ -146,7 +146,10 @@ if(MINIZIP_BUILD_SHARED)
                    OUTPUT_NAME minizip
                    VERSION ${minizip_VERSION}
                    SOVERSION ${minizip_VERSION_MAJOR})
-    target_link_libraries(libminizip PUBLIC ZLIB::ZLIB BZip2::BZip2)
+    target_link_libraries(libminizip PUBLIC ZLIB::ZLIB)
+    if(BZIP2_FOUND)
+        target_link_libraries(libminizip PUBLIC BZip2::BZip2)
+    endif(BZIP2_FOUND)
 
     add_executable(minizip ${MINIZIP_SRCS} ${MINIZIP_HDRS})
     set_target_properties(minizip PROPERTIES EXPORT_NAME minizip_executable)
@@ -185,7 +188,10 @@ if(MINIZIP_BUILD_STATIC)
         set_target_properties(libminizipstatic PROPERTIES SUFFIX ".dll.a")
     endif(CYGWIN)
 
-    target_link_libraries(libminizipstatic PUBLIC ZLIB::ZLIBSTATIC BZip2::BZip2)
+    target_link_libraries(libminizipstatic PUBLIC ZLIB::ZLIBSTATIC)
+    if(BZIP2_FOUND)
+        target_link_libraries(libminizipstatic PUBLIC BZip2::BZip2)
+    endif(BZIP2_FOUND)
     add_executable(minizipstatic ${MINIZIP_SRCS} ${MINIZIP_HDRS})
     set_target_properties(minizipstatic PROPERTIES EXPORT_NAME
                                                    minizip_static_executable)
