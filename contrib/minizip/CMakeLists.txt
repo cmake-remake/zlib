@@ -90,7 +90,7 @@ check_c_source_compiles(
 unset(CMAKE_REQUIRED_FLAGS)
 
 if(NOT TARGET ZLIB::ZLIB)
-    find_package(ZLIB 1.4.1.1 REQUIRED CONFIG HINTS ../../stagedir)
+    find_package(ZLIB 1.4.1.1 REQUIRED CONFIG)
 endif(NOT TARGET ZLIB::ZLIB)
 
 set(LIBMINIZIP_SRCS ioapi.c mztools.c unzip.c zip.c)
@@ -146,10 +146,8 @@ if(MINIZIP_BUILD_SHARED)
                    OUTPUT_NAME minizip
                    VERSION ${minizip_VERSION}
                    SOVERSION ${minizip_VERSION_MAJOR})
-    target_link_libraries(libminizip PUBLIC ZLIB::ZLIB)
-    if(BZIP2_FOUND)
-        target_link_libraries(libminizip PUBLIC BZip2::BZip2)
-    endif(BZIP2_FOUND)
+    target_link_libraries(libminizip PUBLIC ZLIB::ZLIB
+                                            $<$<BOOL:${BZIP2_FOUND}>:BZip2::BZip2>)
 
     add_executable(minizip ${MINIZIP_SRCS} ${MINIZIP_HDRS})
     set_target_properties(minizip PROPERTIES EXPORT_NAME minizip_executable)
@@ -188,10 +186,9 @@ if(MINIZIP_BUILD_STATIC)
         set_target_properties(libminizipstatic PROPERTIES SUFFIX ".dll.a")
     endif(CYGWIN)
 
-    target_link_libraries(libminizipstatic PUBLIC ZLIB::ZLIBSTATIC)
-    if(BZIP2_FOUND)
-        target_link_libraries(libminizipstatic PUBLIC BZip2::BZip2)
-    endif(BZIP2_FOUND)
+    target_link_libraries(
+        libminizipstatic PUBLIC ZLIB::ZLIBSTATIC
+                                $<$<BOOL:${BZIP2_FOUND}>:BZip2::BZip2>)
     add_executable(minizipstatic ${MINIZIP_SRCS} ${MINIZIP_HDRS})
     set_target_properties(minizipstatic PROPERTIES EXPORT_NAME
                                                    minizip_static_executable)
