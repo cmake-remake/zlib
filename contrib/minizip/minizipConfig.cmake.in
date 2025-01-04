@@ -3,6 +3,11 @@
 set(MINIZIP_ENABLE_BZIP2 @MINIZIP_ENABLE_BZIP2@)
 set(_minizip_supported_components "")
 include(CMakeFindDependencyMacro)
+
+if(MINIZIP_ENABLE_BZIP2)
+    find_dependency(BZip2)
+endif(MINIZIP_ENABLE_BZIP2)
+
 if(@MINIZIP_BUILD_SHARED@)
     list(APPEND _minizip_supported_components shared)
 endif(@MINIZIP_BUILD_SHARED@)
