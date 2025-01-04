@@ -40,6 +40,15 @@ include(CMakePackageConfigHelpers)
 include(CheckTypeSize)
 include(GNUInstallDirs)
 
+if(APPLE)
+    set(_base @loader_path)
+else()
+    set(_base $ORIGIN)
+endif()
+file(RELATIVE_PATH _relDir ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}
+     ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR})
+set(CMAKE_INSTALL_RPATH ${_base} ${_base}/${_relDir})
+
 if(NOT CPACK_INCLUDED)
     include(CPack)
 endif(NOT CPACK_INCLUDED)
@@ -146,8 +155,8 @@ if(MINIZIP_BUILD_SHARED)
                    OUTPUT_NAME minizip
                    VERSION ${minizip_VERSION}
                    SOVERSION ${minizip_VERSION_MAJOR})
-    target_link_libraries(libminizip PUBLIC ZLIB::ZLIB
-                                            $<$<BOOL:${BZIP2_FOUND}>:BZip2::BZip2>)
+    target_link_libraries(
+        libminizip PUBLIC ZLIB::ZLIB $<$<BOOL:${BZIP2_FOUND}>:BZip2::BZip2>)
 
     add_executable(minizip ${MINIZIP_SRCS} ${MINIZIP_HDRS})
     set_target_properties(minizip PROPERTIES EXPORT_NAME minizip_executable)
