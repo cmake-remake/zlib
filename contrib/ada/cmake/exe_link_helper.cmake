@@ -34,7 +34,7 @@ foreach(arg RANGE 5 ${CMAKE_ARGC})
         list(APPEND LIBS "${CMAKE_ARGV${arg}}")
     elseif(REACHED_OBJ AND NOT ALI)
         string(REPLACE ".o" ".ali" ALIPATH "${CMAKE_ARGV${arg}}")
-        string(REPLACE "__\/" "" ALI "${ALIPATH}")
+        string(REPLACE "__/" "" ALI "${ALIPATH}")
     else(REACHED_LIBS)
         string(SUBSTRING "${CMAKE_ARGV${arg}}" 0 3 start)
 
